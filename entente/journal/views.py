@@ -1,15 +1,15 @@
 from rest_framework import status, generics, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 from django.shortcuts import render
 
-
 from .models import *
 from .serializers import *
 # Create your views here.
-
 
 class HabitList(generics.ListCreateAPIView):
     serializer_class = HabitSerializer
