@@ -6,3 +6,5 @@
 <a href='/'>Home</a>
 <a href='/'>Login/Logout</a>
 </nav>
+
+{@render children()}
