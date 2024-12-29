@@ -1,0 +1,12 @@
+.wv-container {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+.wv-card {
+  width: auto;
+  border: 1px solid black;
+  width: 100%;
+  height: 100%;
+}

@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  text-align: center;
+}
+
+nav {
+  width: 100%;
+  background-color: #AAA;
+}
+
+.flex-container {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.header-pane {
+  order: 1;
+  flex: 5 0 100%;
+  min-height: 10rem;
+  border: 1px solid black;
+}
+
+.left-pane {
+  order: 2;
+  flex: 1 0;
+  border: 1px solid black;
+}
+
+.center-pane {
+  order: 3;
+  flex: 3 0;
+  min-height: 50rem;
+}
+
+.right-pane {
+  order: 4;
+  flex: 1 0;
+  border: 1px solid black;
+}
+
+.footer-pane {
+  order: 5;
+  flex: 5 0 100%;
+}
