@@ -1,0 +1,14 @@
+.hour-card {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 5fr;
+}
+
+.hour-head {
+  grid-row: 1 / span 2;
+}
+
+.hour-body {
+  border: 1px dotted black;
+  min-height: 1rem;
+}
