@@ -1,0 +1,10 @@
+.prompt-card {
+  min-height: 4rem;
+  border: 1px dotted black;
+  margin: 1rem;
+  width: 50%;
+}
+
+.prompt-title {
+  border-bottom: 1px solid black;
+}
