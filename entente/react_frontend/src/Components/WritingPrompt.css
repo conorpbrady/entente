@@ -3,6 +3,7 @@
   border: 1px dotted black;
   margin: 1rem;
   width: 50%;
+  border-radius: 5px;
 }
 
 .prompt-title {
