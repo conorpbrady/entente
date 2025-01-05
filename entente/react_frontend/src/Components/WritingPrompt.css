@@ -8,3 +8,8 @@
 .prompt-title {
   border-bottom: 1px solid black;
 }
+
+.prompt-body {
+  width: 100%;
+  min-height: 3rem;
+}

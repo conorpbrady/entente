@@ -12,7 +12,7 @@ export default function WritingPrompt({ promptTitle, promptBody }: Props): React
       <div className={"prompt-title"}>
       <p>{promptTitle}</p>
       </div>
-      <div className={"prompt-body"}>
+      <div contentEditable className={"prompt-body"}>
       <p>{promptBody}</p>
       </div>
       </div>
