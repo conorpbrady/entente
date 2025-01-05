@@ -9,17 +9,26 @@ import CenterPane from './Components/CenterPane';
 import RightPane from './Components/RightPane';
 import FooterPane from './Components/FooterPane';
 import FooterBar from './Components/FooterBar';
+
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [showTop, setShowTop] = useState(true);
+  const [showLeft, setShowLeft] = useState(true);
+  const [showRight, setShowRight] = useState(true);
+
+  const toggleTop = () => setShowTop(!showTop)
+  const toggleLeft = () => setShowLeft(!showLeft)
+  const toggleRight = () => setShowRight(!showRight)
 
   return (
     <>
       <NavBar />
       <div className={"flex-container"}>
-      <HeaderPane />
-        <LeftPane />
-        <CenterPane />
-        <RightPane />
+        { showTop && <HeaderPane /> }
+        { showLeft && <LeftPane  /> }
+        <CenterPane toggleTop={toggleTop} toggleLeft={toggleLeft} toggleRight={toggleRight}
+                    showTop={showTop} showLeft={showLeft} showRight={showRight} />
+        { showRight && <RightPane /> }
       <FooterPane />
       </div>
       <FooterBar />
