@@ -19,8 +19,8 @@ export default function HabitTracker() {
   return (
     <div className={"habit-grid"}>
     {
-      transpose(habits).map((habit) => {
-        return habit.map((active) => <HabitCell active={active} />);
+      transpose(habits).map((habit, i) => {
+        return habit.map((active, j) => <HabitCell key={`${i}${j}`} active={active} />);
       })
     }
 

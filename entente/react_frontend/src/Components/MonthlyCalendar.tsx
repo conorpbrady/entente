@@ -45,6 +45,7 @@ export default function MonthlyCalendar({ displayDate, changeDate }: { displayDa
   const [year, setYear] = useState(new Date().getFullYear())
   return (
     <table className={"monthly-calendar"}>
+    <tbody>
     <tr>
       <th>Su</th>
       <th>Mo</th>
@@ -55,7 +56,7 @@ export default function MonthlyCalendar({ displayDate, changeDate }: { displayDa
       <th>Sa</th>
       </tr>
       {generateDays(month, year).map((week, i) => <MonthlyWeek key={i} month={month} year={year} week={week} currentDate={displayDate} changeDate={changeDate} />)}
-
+      </tbody>
       </table>
   );
 };

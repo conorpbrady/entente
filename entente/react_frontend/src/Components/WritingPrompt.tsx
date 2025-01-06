@@ -12,8 +12,8 @@ export default function WritingPrompt({ promptTitle, promptBody }: Props): React
       <div className={"prompt-title"}>
       <p>{promptTitle}</p>
       </div>
-      <div contentEditable className={"prompt-body"}>
-      <p>{promptBody}</p>
+      <div contentEditable suppressContentEditableWarning className={"prompt-body"}>
+      {promptBody}
       </div>
       </div>
   );

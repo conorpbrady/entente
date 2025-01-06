@@ -6,7 +6,7 @@ const daysOfWeek: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 export default function WeekView() {
   return (
     <div className={"wv-container"}>
-    {daysOfWeek.map((day) => <DayCard day={day} />)}
+    {daysOfWeek.map((day, i) => <DayCard key={i} day={day} />)}
     </div>
   );
 };
