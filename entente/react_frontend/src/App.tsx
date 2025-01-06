@@ -20,12 +20,15 @@ function App() {
   const toggleTop = () => setShowTop(!showTop)
   const toggleLeft = () => setShowLeft(!showLeft)
   const toggleRight = () => setShowRight(!showRight)
+
+  const changeDate = (d: Date): void => setDisplayDate(d);
+
   return (
     <>
       <NavBar />
       <div className={"flex-container"}>
         { showTop && <HeaderPane /> }
-        { showLeft && <LeftPane displayDate={displayDate} /> }
+        { showLeft && <LeftPane displayDate={displayDate} changeDate={changeDate} /> }
         <CenterPane toggleTop={toggleTop} toggleLeft={toggleLeft} toggleRight={toggleRight}
                     showTop={showTop} showLeft={showLeft} showRight={showRight} />
         { showRight && <RightPane /> }

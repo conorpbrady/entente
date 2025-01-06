@@ -1,26 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './MonthlyCalendar.css'
 
-const month: number = new Date().getMonth() + 1;
-const year: number = new Date().getFullYear();
+
 
 const MONTHS: string[] = [, 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 
-const getStartOfMonth = (month: number, year: number) => {
-    const d: Date = new Date(year, month - 1, 1);
+const getStartOfMonth = (m: number, y: number) => {
+    const d: Date = new Date(y, m - 1, 1);
     return d.getDay();
   }
 
-const getDaysInMonth = (month: number, year: number) => {
-    const d = new Date(year, month, 0)
+const getDaysInMonth = (m: number, y: number) => {
+    const d = new Date(y, m, 0)
     return d.getDate();
   }
 
 
-const generateDays = (month: number, year: number) => {
-  const start = getStartOfMonth(month, year);
-  const all_days = Array.from(Array(getDaysInMonth(month, year))).map((e: number, i: number) => i+1);
+const generateDays = (m: number, y: number) => {
+  const start = getStartOfMonth(m, y);
+  const all_days = Array.from(Array(getDaysInMonth(m, y))).map((e: number, i: number) => i+1);
   const cal_days = []
     while (all_days.length > 0) {
       let week: number[] = []
@@ -40,7 +39,10 @@ const generateDays = (month: number, year: number) => {
     }
     return cal_days;
   }
-export default function MonthlyCalendar({ displayDate }: { displayDate: Date }) {
+export default function MonthlyCalendar({ displayDate, changeDate }: { displayDate: Date, changeDate: (d: Date) => void }) {
+
+  const [month, setMonth] = useState(new Date().getMonth() + 1)
+  const [year, setYear] = useState(new Date().getFullYear())
   return (
     <table className={"monthly-calendar"}>
     <tr>
@@ -52,21 +54,22 @@ export default function MonthlyCalendar({ displayDate }: { displayDate: Date }) 
       <th>Fr</th>
       <th>Sa</th>
       </tr>
-      {generateDays(month, year).map((week) => <MonthlyWeek week={week} currentDate={displayDate} />)}
+      {generateDays(month, year).map((week, i) => <MonthlyWeek key={i} month={month} year={year} week={week} currentDate={displayDate} changeDate={changeDate} />)}
 
       </table>
   );
 };
 
-function MonthlyWeek({ week, currentDate }: { week: number[], currentDate: Date }): React.JSX.Element {
+function MonthlyWeek({ month, year, week, currentDate, changeDate }: { month: number, year: number, week: number[], currentDate: Date, changeDate: (d: Date) => void }): React.JSX.Element {
   return (
     <tr>
-      {week.map((day) => <MonthlyDay day={day} currentDate={currentDate} />)}
+      {week.map((day, i) => <MonthlyDay key={i} month={month} year={year} day={day} currentDate={currentDate} changeDate={changeDate} />)}
       </tr>
   );
 };
 
-function MonthlyDay({ day, currentDate }: {day: number, currentDate: Date }): React.JSX.Element {
+function MonthlyDay({ month, year, day, currentDate, changeDate }: {month: number, year: number, day: number, currentDate: Date, changeDate: (d: Date) => void  }): React.JSX.Element {
   const activeClass = day === currentDate.getDate() ? "highlighted-day" : ""
-  return day != 0 ? (<td className={activeClass}>{day}</td>): (<td></td>)
+  const d = new Date(`${month}/${day}/${year}`)
+  return day != 0 ? (<td className={activeClass} onClick={() => changeDate(d)}>{day}</td>): (<td></td>)
 };
