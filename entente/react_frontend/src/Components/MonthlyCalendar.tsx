@@ -43,21 +43,44 @@ export default function MonthlyCalendar({ displayDate, changeDate }: { displayDa
 
   const [month, setMonth] = useState(new Date().getMonth() + 1)
   const [year, setYear] = useState(new Date().getFullYear())
+
+  const incrementMonth = () => {
+    const newMonth = (month % 12) + 1
+    if (newMonth === 1) { setYear(year + 1) }
+    setMonth(newMonth)
+  }
+
+  const decrementMonth = () => {
+    let newMonth = month - 1
+    if (newMonth === 0) {
+      setYear(year - 1)
+      newMonth = 12
+    }
+    setMonth(newMonth)
+  }
+
   return (
-    <table className={"monthly-calendar"}>
-    <tbody>
-    <tr>
-      <th>Su</th>
-      <th>Mo</th>
-      <th>Tu</th>
-      <th>We</th>
-      <th>Th</th>
-      <th>Fr</th>
-      <th>Sa</th>
-      </tr>
-      {generateDays(month, year).map((week, i) => <MonthlyWeek key={i} month={month} year={year} week={week} currentDate={displayDate} changeDate={changeDate} />)}
-      </tbody>
-      </table>
+    <div>
+      <div className={"monthly-header"}>
+        <a onClick={decrementMonth}>{'<'}</a>
+        {`${MONTHS[month]} ${year}`}
+        <a onClick={incrementMonth}>{'>'}</a>
+      </div>
+      <table className={"monthly-calendar"}>
+        <tbody>
+        <tr>
+          <th>Su</th>
+          <th>Mo</th>
+          <th>Tu</th>
+          <th>We</th>
+          <th>Th</th>
+          <th>Fr</th>
+          <th>Sa</th>
+          </tr>
+          {generateDays(month, year).map((week, i) => <MonthlyWeek key={i} month={month} year={year} week={week} currentDate={displayDate} changeDate={changeDate} />)}
+          </tbody>
+        </table>
+      </div>
   );
 };
 
@@ -69,8 +92,16 @@ function MonthlyWeek({ month, year, week, currentDate, changeDate }: { month: nu
   );
 };
 
+
+function compareDate(dateA: Date, dateB: Date): boolean {
+  dateA.setHours(0,0,0,0)
+  dateB.setHours(0,0,0,0)
+  return dateA.toISOString() === dateB.toISOString()
+}
+
 function MonthlyDay({ month, year, day, currentDate, changeDate }: {month: number, year: number, day: number, currentDate: Date, changeDate: (d: Date) => void  }): React.JSX.Element {
-  const activeClass = day === currentDate.getDate() ? "highlighted-day" : ""
-  const d = new Date(`${month}/${day}/${year}`)
-  return day != 0 ? (<td className={activeClass} onClick={() => changeDate(d)}>{day}</td>): (<td></td>)
+  if (day == 0) { return (<td></td>) }
+  const d = new Date(year, month - 1, day)
+  const activeClass = compareDate(d, currentDate) ? "highlighted-day" : ""
+  return (<td className={activeClass} onClick={() => changeDate(d)}>{day}</td>)
 };
