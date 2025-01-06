@@ -40,7 +40,7 @@ const generateDays = (month: number, year: number) => {
     }
     return cal_days;
   }
-export default function MonthlyCalendar() {
+export default function MonthlyCalendar({ displayDate }: { displayDate: Date }) {
   return (
     <table className={"monthly-calendar"}>
     <tr>
@@ -52,20 +52,21 @@ export default function MonthlyCalendar() {
       <th>Fr</th>
       <th>Sa</th>
       </tr>
-      {generateDays(month, year).map((week) => <MonthlyWeek week={week} />)}
+      {generateDays(month, year).map((week) => <MonthlyWeek week={week} currentDate={displayDate} />)}
 
       </table>
   );
 };
 
-function MonthlyWeek({ week }: { week: number[] }): React.JSX.Element {
+function MonthlyWeek({ week, currentDate }: { week: number[], currentDate: Date }): React.JSX.Element {
   return (
     <tr>
-      {week.map((day) => <MonthlyDay day={day} />)}
+      {week.map((day) => <MonthlyDay day={day} currentDate={currentDate} />)}
       </tr>
   );
 };
 
-function MonthlyDay({ day }: {day: number }): React.JSX.Element {
-  return day != 0 ? (<td>{day}</td>): (<td></td>)
+function MonthlyDay({ day, currentDate }: {day: number, currentDate: Date }): React.JSX.Element {
+  const activeClass = day === currentDate.getDate() ? "highlighted-day" : ""
+  return day != 0 ? (<td className={activeClass}>{day}</td>): (<td></td>)
 };

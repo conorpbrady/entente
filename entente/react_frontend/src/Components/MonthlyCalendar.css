@@ -1,3 +1,8 @@
 .monthly-calendar {
   width: 100%;
 }
+
+.highlighted-day {
+  border: 1px dashed blue;
+
+}
