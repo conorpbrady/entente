@@ -7,7 +7,7 @@ export default function WeekView({ selectedDate, changeDate }: { selectedDate: D
   const month = selectedDate.getMonth()
   const dow = selectedDate.getDay()
   const day = selectedDate.getDate()
-
+  selectedDate.setHours(0,0,0,0) // Needed so day is selected on page load
   return (
     <div className={"wv-container"}>
     {[...Array(7).keys()].map((i) => <DayCard key={i} changeDate={changeDate} selectedDate={selectedDate} day={new Date(year, month, day - dow + i, 0, 0, 0)} />)}
