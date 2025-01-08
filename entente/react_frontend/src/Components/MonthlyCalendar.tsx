@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import './MonthlyCalendar.css'
 
-
-
 const MONTHS: string[] = [, 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
 
 const getStartOfMonth = (m: number, y: number) => {
     const d: Date = new Date(y, m - 1, 1);
@@ -15,7 +12,6 @@ const getDaysInMonth = (m: number, y: number) => {
     const d = new Date(y, m, 0)
     return d.getDate();
   }
-
 
 const generateDays = (m: number, y: number) => {
   const start = getStartOfMonth(m, y);
@@ -41,8 +37,8 @@ const generateDays = (m: number, y: number) => {
   }
 export default function MonthlyCalendar({ displayDate, changeDate }: { displayDate: Date, changeDate: (d: Date) => void }) {
 
-  const [month, setMonth] = useState(new Date().getMonth() + 1)
-  const [year, setYear] = useState(new Date().getFullYear())
+  const [month, setMonth] = useState(displayDate.getMonth() + 1)
+  const [year, setYear] = useState(displayDate.getFullYear())
 
   const incrementMonth = () => {
     const newMonth = (month % 12) + 1
