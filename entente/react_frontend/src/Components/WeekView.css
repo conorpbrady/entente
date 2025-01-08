@@ -13,3 +13,7 @@
   min-height: 8rem;
   border-radius: 10px;
 }
+.highlighted-day {
+  border: 1px dotted blue;
+  background-color: lightblue;
+}

@@ -9,10 +9,14 @@ interface Props {
   showTop: boolean;
   showRight: boolean;
   showLeft: boolean;
+  selectedDate: Date;
 }
 export default function CenterPane(props: Props) {
   return (
     <div className={"center-pane"}>
+    <h3>
+    {props.selectedDate.toLocaleDateString("en-US", {weekday: "long", month: "long", day: "numeric", year: "numeric"})}
+    </h3>
     <WritingPrompt promptTitle={"What's on your mind?"} promptBody={""} />
     <WritingPrompt promptTitle={"What would you like to do today?"} promptBody={""} />
 
