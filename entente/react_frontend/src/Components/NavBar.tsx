@@ -1,11 +1,12 @@
 import React from 'react';
 import './NavBar.css';
 
-export default function NavBar() {
+export default function NavBar({ openLoginModal }: { openLoginModal: () => void }) {
 
   return (
     <nav>
-      <p>Nav Bar</p>
+      <span onClick={openLoginModal}>Login</span>
+
     </nav>
   );
 };

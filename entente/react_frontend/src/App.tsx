@@ -9,6 +9,7 @@ import CenterPane from './Components/CenterPane';
 import RightPane from './Components/RightPane';
 import FooterPane from './Components/FooterPane';
 import FooterBar from './Components/FooterBar';
+import LoginModal from './Components/LoginModal';
 
 function App() {
 
@@ -17,15 +18,20 @@ function App() {
   const [showRight, setShowRight] = useState(true);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
+  const [loginModalVisible, setLoginModalVisible] = useState(false);
+
   const toggleTop = () => setShowTop(!showTop)
   const toggleLeft = () => setShowLeft(!showLeft)
   const toggleRight = () => setShowRight(!showRight)
 
   const changeDate = (d: Date): void => setSelectedDate(d);
 
+  const closeLoginModal = () => setLoginModalVisible(false)
+  const openLoginModal = () => setLoginModalVisible(true)
+
   return (
     <>
-      <NavBar />
+      <NavBar openLoginModal={openLoginModal} />
       <div className={"flex-container"}>
         { showTop && <HeaderPane selectedDate={selectedDate} changeDate={changeDate} /> }
         { showLeft && <LeftPane displayDate={selectedDate} changeDate={changeDate} /> }
@@ -36,6 +42,7 @@ function App() {
       <FooterPane />
       </div>
       <FooterBar />
+      <LoginModal visible={loginModalVisible} closeLoginModal={closeLoginModal} />
     </>
   )
 }
