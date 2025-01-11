@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -10,6 +10,7 @@ import RightPane from './Components/RightPane';
 import FooterPane from './Components/FooterPane';
 import FooterBar from './Components/FooterBar';
 import LoginModal from './Components/LoginModal';
+import { authenticate, getUser } from './api/authService'
 
 function App() {
 
@@ -20,6 +21,9 @@ function App() {
 
   const [loginModalVisible, setLoginModalVisible] = useState(false);
 
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState({});
+
   const toggleTop = () => setShowTop(!showTop)
   const toggleLeft = () => setShowLeft(!showLeft)
   const toggleRight = () => setShowRight(!showRight)
@@ -29,9 +33,20 @@ function App() {
   const closeLoginModal = () => setLoginModalVisible(false)
   const openLoginModal = () => setLoginModalVisible(true)
 
+
+  useEffect(() => {
+    authenticate().then((isAuthenticated) => {
+
+      const user = getUser()
+      console.log(user)
+      setIsAuthenticated(isAuthenticated)
+      setUser(user)
+    })
+  }, [])
+
   return (
     <>
-      <NavBar openLoginModal={openLoginModal} />
+      <NavBar isAuthenticated={isAuthenticated} user={user} openLoginModal={openLoginModal} />
       <div className={"flex-container"}>
         { showTop && <HeaderPane selectedDate={selectedDate} changeDate={changeDate} /> }
         { showLeft && <LeftPane displayDate={selectedDate} changeDate={changeDate} /> }

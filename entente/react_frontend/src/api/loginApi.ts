@@ -12,12 +12,13 @@ export default function submitLogin(loginInfo: LoginInfo): string {
            method: 'POST',
            body: JSON.stringify(loginInfo)
          })
-    .then((response) => {
-      // do stuff
-     localStorage.setItem('refresh_token', response.data.refresh)
-     localStorage.setItem('access_token', response.data.access)
-     message = "Login Successful"
-    })
+     .then((response) => response.json())
+     .then((data) => {
+        console.log(data)
+        localStorage.setItem('refresh_token', data.refresh)
+        localStorage.setItem('access_token', data.access)
+        message = "Login Successful"
+     })
     .catch((error) => {
       message = "Login Failed"
     });

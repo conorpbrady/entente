@@ -1,26 +1,23 @@
 import axiosInstance from './axiosApi';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 const refresh = localStorage.getItem('refresh_token');
-/*
-const verifyTokenRequest = axiosInstance.post('/api/token/verify', {token: refresh})
-                            .then(response => { return response; })
-                            .catch(error => { console.log(error); });
-*/
+
 const getUser = () => {
   if (refresh === null) {
     return { user_id: null, username: null, display_name: null };
   }
-  const json = jwt_decode(refresh);
+  const json = jwtDecode(refresh);
   return json;
 };
 
 const authenticate = async () => {
+
   if (refresh === null) {
     return false;
   }
   try {
-    const response = await axiosInstance.post('/api/token/verify', {
+    const response = await axiosInstance.post('http://localhost:8080/api/token/verify', {
       token: refresh,
     });
     if (response.status === 200) {

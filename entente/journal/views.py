@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
-
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from django.shortcuts import render
 
@@ -11,6 +11,9 @@ from .models import *
 from .serializers import *
 # Create your views here.
 
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
 class HabitList(generics.ListCreateAPIView):
     serializer_class = HabitSerializer
     def get_queryset(self):
