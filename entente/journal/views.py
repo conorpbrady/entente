@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from django.shortcuts import render
 
@@ -22,6 +23,19 @@ class HabitList(generics.ListCreateAPIView):
         return Habit.objects.filter(owner = self.request.user,
                                     date__gte = start_date,
                                     date__lte = end_date)
+
+class BlacklistRefreshToken(APIView):
+    authentication_classes = ()
+    permission_classes = (permissions.AllowAny,)
+    def post(self, request):
+        try:
+            refresh_token = request.data['token']
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response(status = status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            print(e)
+            return Response(status = status.HTTP_400_BAD_REQUEST)
 
 class PromptList(generics.ListCreateAPIView):
     serializer_class = PromptSerializer
