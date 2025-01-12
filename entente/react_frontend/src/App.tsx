@@ -10,7 +10,7 @@ import RightPane from './Components/RightPane';
 import FooterPane from './Components/FooterPane';
 import FooterBar from './Components/FooterBar';
 import LoginModal from './Components/LoginModal';
-import { authenticate, getUser } from './api/authService'
+import { authenticate, getUser, logout } from './api/authService'
 
 function App() {
 
@@ -36,9 +36,7 @@ function App() {
 
   useEffect(() => {
     authenticate().then((isAuthenticated) => {
-
       const user = getUser()
-      console.log(user)
       setIsAuthenticated(isAuthenticated)
       setUser(user)
     })
@@ -46,7 +44,8 @@ function App() {
 
   return (
     <>
-      <NavBar isAuthenticated={isAuthenticated} user={user} openLoginModal={openLoginModal} />
+      <NavBar isAuthenticated={isAuthenticated} user={user} logout={logout} openLoginModal={openLoginModal} />
+      {isAuthenticated ? (
       <div className={"flex-container"}>
         { showTop && <HeaderPane selectedDate={selectedDate} changeDate={changeDate} /> }
         { showLeft && <LeftPane displayDate={selectedDate} changeDate={changeDate} /> }
@@ -55,9 +54,17 @@ function App() {
                     selectedDate={selectedDate} />
         { showRight && <RightPane selectedDate={selectedDate} /> }
       <FooterPane />
-      </div>
+      </div> ) :
+        ( <div className={"landing-page"}>
+          <p>Entente is a customizable journal / calendar / planner where you can view everything going on in your life at a glance.</p>
+          <p> Try it out! </p>
+          <p> Add some screenshots and make it sexy </p>
+          </div>
+        )
+      }
       <FooterBar />
       <LoginModal visible={loginModalVisible} closeLoginModal={closeLoginModal} />
+
     </>
   )
 }

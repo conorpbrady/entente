@@ -1,4 +1,4 @@
-import react, { useState, useCallback, FormEvent } from 'react'
+import react, { useState, useCallback, useEffect, FormEvent } from 'react'
 import submitLogin from '../api/loginApi';
 import './LoginModal.css'
 
@@ -11,10 +11,17 @@ export default function LoginModal({ visible, closeLoginModal }: { visible: bool
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const message = submitLogin(inputs);
-    setMessage(message);
-    setInputs(initInputs);
+    submitLogin(inputs).then((loginStatus) => {;
+      console.log('hello')
+      window.location.href = '/'
+    }).catch((error) => {
+      setMessage('Login Failed');
+      setInputs(initInputs);
+    })
   };
+  useEffect(() => {
+    if(!visible) { setMessage('') }
+  }, [visible])
 
   const updateUsername = (username: string)  => {
     setInputs((prevState) => ({...prevState, username: username}))

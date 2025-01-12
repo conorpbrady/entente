@@ -2,25 +2,23 @@ type LoginInfo = {
   username: string;
   password: string;
 }
-export default function submitLogin(loginInfo: LoginInfo): string {
-   let message = ''
+export default async function submitLogin(loginInfo: LoginInfo): Promise<boolean> {
 
-   fetch('http://localhost:8080/api/token/',
+   const response = await fetch('http://localhost:8080/api/token/',
          {
            headers:
              {'Content-Type': 'application/json'},
            method: 'POST',
            body: JSON.stringify(loginInfo)
          })
-     .then((response) => response.json())
-     .then((data) => {
+   if(response.status === 200) {
+        const data = await response.json()
         console.log(data)
         localStorage.setItem('refresh_token', data.refresh)
         localStorage.setItem('access_token', data.access)
-        message = "Login Successful"
-     })
-    .catch((error) => {
-      message = "Login Failed"
-    });
-   return message
+        return Promise.resolve(true)
+   }
+    else {
+      return Promise.reject(false)
+      }
 }

@@ -32,7 +32,7 @@ const authenticate = async () => {
 
 const logout = async () => {
   try {
-    await axiosInstance.post('/api/blacklist', {
+    await axiosInstance.post('http://localhost:8080/api/token/blacklist', {
       token: refresh,
     });
 

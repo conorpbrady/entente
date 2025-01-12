@@ -1,12 +1,11 @@
 import axios from 'axios';
 import Cookie from 'js-cookie';
 
-const baseUrl = 'https://localhost:8000/api/';
 
 const csrfToken = Cookie.get('csrftoken');
 
 const axiosConfig = {
-  baseUrl: 'http://localhost:8000/api/',
+  baseURL: 'http://localhost:8000/api/',
   timeout: 5000,
   headers: {
     Authorization: 'JWT ' + localStorage.getItem('access_token'),
@@ -34,7 +33,9 @@ const processQueue = (error, token = null) => {
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
+    console.log(error)
     const originalRequest = error.config;
+
     const errorStatus = error.response.status;
     const errorDetails = error.response.data.errors.reduce(
       (obj, item) => ((obj[item.field] = item.message), obj),
@@ -127,4 +128,5 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
 export default axiosInstance;

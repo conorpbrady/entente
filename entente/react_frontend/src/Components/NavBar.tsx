@@ -6,15 +6,24 @@ type UserObject = {
   user_id: number;
   display_name: string;
 }
-const logout = (): void => console.log('logout')
-export default function NavBar({ isAuthenticated, user, openLoginModal }: { isAuthenticated: boolean, user: UserObject, openLoginModal: () => void }) {
 
+type NavBarProps = {
+  isAuthenticated: boolean;
+  user: UserObject;
+  logout: () => void;
+  openLoginModal: () => void;
+}
+
+export default function NavBar(props: NavBarProps) {
   return (
     <nav>
-      {isAuthenticated ? (<span onClick={logout}>Logout</span>)
-        : (<span onClick={openLoginModal}>Login</span>)}
-        {user ? (<span> | </span>): '' }
-        {user ? (<span>{user.username}</span>) : '' }
+      {
+        props.isAuthenticated ?
+        (<span onClick={props.logout}>Logout</span>) :
+        (<span onClick={props.openLoginModal}>Login</span>)
+      }
+        {props.user.username ? (<span> | </span>) : '' }
+        {props.user.username ? (<span>{props.user.username}</span>) : '' }
 
     </nav>
   );
