@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './MonthlyCalendar.css'
 
 const MONTHS: string[] = [, 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -39,6 +39,12 @@ export default function MonthlyCalendar({ displayDate, changeDate }: { displayDa
 
   const [month, setMonth] = useState(displayDate.getMonth() + 1)
   const [year, setYear] = useState(displayDate.getFullYear())
+
+
+  useEffect(() => {
+    setMonth(displayDate.getMonth() + 1)
+    setYear(displayDate.getFullYear())
+  }, [displayDate])
 
   const incrementMonth = () => {
     const newMonth = (month % 12) + 1
