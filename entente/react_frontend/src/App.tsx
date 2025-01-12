@@ -11,6 +11,7 @@ import FooterPane from './Components/FooterPane';
 import FooterBar from './Components/FooterBar';
 import LoginModal from './Components/LoginModal';
 import { authenticate, getUser, logout } from './api/authService'
+import { useGetHabitData } from './hooks/useGetHabitData'
 
 function App() {
 
@@ -23,6 +24,12 @@ function App() {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState({});
+
+  const m = selectedDate.getMonth() + 1
+  const y = selectedDate.getFullYear()
+  const { habitData } = useGetHabitData(m, y);
+
+
 
   const toggleTop = () => setShowTop(!showTop)
   const toggleLeft = () => setShowLeft(!showLeft)

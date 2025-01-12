@@ -15,14 +15,6 @@ from .serializers import *
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
-class HabitList(generics.ListCreateAPIView):
-    serializer_class = HabitSerializer
-    def get_queryset(self):
-        start_date = self.request.query_params['start_date']
-        end_date = self.request.query_params['end_date']
-        return Habit.objects.filter(owner = self.request.user,
-                                    date__gte = start_date,
-                                    date__lte = end_date)
 
 class BlacklistRefreshToken(APIView):
     authentication_classes = ()
@@ -36,6 +28,18 @@ class BlacklistRefreshToken(APIView):
         except Exception as e:
             print(e)
             return Response(status = status.HTTP_400_BAD_REQUEST)
+
+
+class HabitList(generics.ListCreateAPIView):
+    serializer_class = HabitSerializer
+    authentication_classes = [JWTAuthentication,]
+    def get_queryset(self):
+        start_date = self.request.query_params['start_date']
+        end_date = self.request.query_params['end_date']
+        return Habit.objects.filter(owner = self.request.user,
+                                    date__gte = start_date,
+                                    date__lte = end_date)
+
 
 class PromptList(generics.ListCreateAPIView):
     serializer_class = PromptSerializer
