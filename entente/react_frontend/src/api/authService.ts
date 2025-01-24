@@ -5,7 +5,7 @@ const refresh = localStorage.getItem('refresh_token');
 
 const getUser = () => {
   if (refresh === null) {
-    return { user_id: null, username: null, display_name: null };
+    return { user_id: null, username: null };
   }
   const json = jwtDecode(refresh);
   return json;

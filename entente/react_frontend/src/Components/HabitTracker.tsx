@@ -1,26 +1,27 @@
 import React from 'react';
 import './HabitTracker.css';
+import { useGetHabitData } from '../hooks/useGetHabitData'
 
-const habits: number[][] = [[0, 0, 0], [1, 0, 1], [0, 0, 1]]
+export default function HabitTracker({ selectedDate }: { selectedDate: Date }) {
 
+    const m = selectedDate.getMonth() + 1
+    const y = selectedDate.getFullYear()
+    const start_date = new Date(y, m - 1, 1).toISOString().substr(0,10)
+    const end_date = new Date(y, m, 0).toISOString().substr(0,10)
 
-function transpose(matrix: number[][]): number[][] {
-  for (let i = 0; i < matrix.length; i++) {
-    for (let j = 0; j < i; j++) {
-      const temp = matrix[i][j];
-      matrix[i][j] = matrix[j][i];
-      matrix[j][i] = temp;
-    }
-  }
-   return matrix;
-}
+    const dim = new Date(m, y, 0).getDate()
 
-export default function HabitTracker() {
-  return (
-    <div className={"habit-grid"}>
+    const { habitData } = useGetHabitData(start_date, end_date)
+
+    const habit_id = 1
+
+    return (
+     <div className={"habit-grid"}>
     {
-      transpose(habits).map((habit, i) => {
-        return habit.map((active, j) => <HabitCell key={`${i}${j}`} active={active} />);
+      [...Array(dim + 1).keys()].map((d) => {
+        const day = d + 1
+        const active: boolean = (day in habitData && habitData[day].includes(habit_id))
+        return (<HabitCell key={day} active={active} />)
       })
     }
 
@@ -28,7 +29,7 @@ export default function HabitTracker() {
   );
 };
 
-function HabitCell({ active }: { active: number }): React.JSX.Element {
+function HabitCell({ active }: { active: boolean }): React.JSX.Element {
   const activeClass = active ? "active-cell" : "";
   const classes = `habit-cell ${activeClass}`
   return (

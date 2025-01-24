@@ -37,8 +37,8 @@ class HabitList(generics.ListCreateAPIView):
         start_date = self.request.query_params['start_date']
         end_date = self.request.query_params['end_date']
         return Habit.objects.filter(owner = self.request.user,
-                                    date__gte = start_date,
-                                    date__lte = end_date)
+                                    habit_date__gte = start_date,
+                                    habit_date__lte = end_date)
 
 
 class PromptList(generics.ListCreateAPIView):
@@ -47,8 +47,8 @@ class PromptList(generics.ListCreateAPIView):
         start_date = self.request.query_params['start_date']
         end_date = self.request.query_params['end_date']
         return Prompt.objects.filter(owner = self.request.user,
-                                     date__gte = start_date,
-                                     date__lte = end_date)
+                                     prompt_date__gte = start_date,
+                                     prompt_date__lte = end_date)
 
 class EventList(generics.ListCreateAPIView):
     serializer_class = EventSerializer
@@ -56,5 +56,5 @@ class EventList(generics.ListCreateAPIView):
         start_date = self.request.query_params['start_date']
         end_date = self.request.query_params['end_date']
         return Event.objects.filter(owner = self.request.user,
-                                    date__gte = start_date,
-                                    date__lte = end_date)
+                                    event_date__gte = start_date,
+                                    event_date__lte = end_date)

@@ -11,7 +11,6 @@ import FooterPane from './Components/FooterPane';
 import FooterBar from './Components/FooterBar';
 import LoginModal from './Components/LoginModal';
 import { authenticate, getUser, logout } from './api/authService'
-import { useGetHabitData } from './hooks/useGetHabitData'
 
 function App() {
 
@@ -24,12 +23,6 @@ function App() {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState({});
-
-  const m = selectedDate.getMonth() + 1
-  const y = selectedDate.getFullYear()
-  const { habitData } = useGetHabitData(m, y);
-
-
 
   const toggleTop = () => setShowTop(!showTop)
   const toggleLeft = () => setShowLeft(!showLeft)
@@ -55,7 +48,7 @@ function App() {
       {isAuthenticated ? (
       <div className={"flex-container"}>
         { showTop && <HeaderPane selectedDate={selectedDate} changeDate={changeDate} /> }
-        { showLeft && <LeftPane displayDate={selectedDate} changeDate={changeDate} /> }
+        { showLeft && <LeftPane selectedDate={selectedDate} changeDate={changeDate} /> }
         <CenterPane toggleTop={toggleTop} toggleLeft={toggleLeft} toggleRight={toggleRight}
                     showTop={showTop} showLeft={showLeft} showRight={showRight}
                     selectedDate={selectedDate} />

@@ -3,11 +3,11 @@ import './RightPane.css';
 import MonthlyCalendar from './MonthlyCalendar';
 import HabitTracker from './HabitTracker';
 
-export default function LeftPane({ displayDate, changeDate }: { displayDate: Date, changeDate: (d: Date) => void}) {
+export default function LeftPane({ selectedDate, changeDate }: { selectedDate: Date, changeDate: (d: Date) => void}) {
   return (
     <div className={"left-pane"}>
-    <MonthlyCalendar displayDate={displayDate} changeDate={changeDate} />
-    <HabitTracker />
+    <MonthlyCalendar displayDate={selectedDate} changeDate={changeDate} />
+    <HabitTracker selectedDate={selectedDate} />
     </div>
 
   );

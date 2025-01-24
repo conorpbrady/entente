@@ -16,14 +16,14 @@ class Widget(BaseModel):
 
 class Habit(Widget):
     title = models.CharField(max_length = 32)
-    date = models.DateField()
+    habit_date = models.DateField()
     status = models.IntegerField(default = 0)
 
 class Prompt(Widget):
     prompt_text = models.CharField(max_length = 255)
-    date = models.DateField()
+    prompt_date = models.DateField()
     response_text = models.TextField()
 
 class Event(Widget):
     name = models.CharField(max_length = 64)
-    datetime = models.DateTimeField()
+    event_datetime = models.DateTimeField()

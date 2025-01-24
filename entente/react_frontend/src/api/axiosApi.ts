@@ -33,7 +33,6 @@ const processQueue = (error, token = null) => {
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.log(error)
     const originalRequest = error.config;
 
     const errorStatus = error.response.status;
